@@ -48,6 +48,27 @@ budgetchain-app/
 │   │   │   └── reports.cairo
 │   │   └── tests/
 │   │       └── test_reports.cairo
+│   ├── TransactionLedger/ # Transaction ledger contract
+│   │   ├── Scarb.toml
+│   │   ├── src/
+│   │   │   ├── lib.cairo
+│   │   │   └── transaction_ledger.cairo
+│   │   └── tests/
+│   │       └── test_transaction_ledger.cairo
+│   ├── ProjectManagement/ # Project management contract
+│   │   ├── Scarb.toml
+│   │   ├── src/
+│   │   │   ├── lib.cairo
+│   │   │   └── project_management.cairo
+│   │   └── tests/
+│   │       └── test_project_management.cairo
+│   ├── OrganizationManagement/ # Organization management contract
+│   │   ├── Scarb.toml
+│   │   ├── src/
+│   │   │   ├── lib.cairo
+│   │   │   └── organization_management.cairo
+│   │   └── tests/
+│   │       └── test_organization_management.cairo
 │   └── [additional contract directories]
 └── [additional directories as project grows]
 ```
@@ -113,6 +134,9 @@ The core functionality is implemented through individual Cairo smart contracts, 
 - **Expenses Contract**: Record and categorize expenses
 - **Goals Contract**: Set and monitor financial goals
 - **Reports Contract**: Generate financial reports and analytics
+- **Transaction Ledger Contract**: Record and track all financial transactions
+- **Project Management Contract**: Manage projects, tasks, and team collaboration
+- **Organization Management Contract**: Handle organizational structure and permissions
 
 Each contract is independently deployable and can be used standalone or in combination with others. Notifications and alerts are handled off-chain through the application layer.
 

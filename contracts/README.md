@@ -41,13 +41,34 @@ contracts/
 │   │   └── goals.cairo
 │   └── tests/
 │       └── test_goals.cairo
-└── Reports/            # Reporting and analytics contract
+├── Reports/            # Reporting and analytics contract
+│   ├── Scarb.toml
+│   ├── src/
+│   │   ├── lib.cairo
+│   │   └── reports.cairo
+│   └── tests/
+│       └── test_reports.cairo
+├── TransactionLedger/  # Transaction ledger contract
+│   ├── Scarb.toml
+│   ├── src/
+│   │   ├── lib.cairo
+│   │   └── transaction_ledger.cairo
+│   └── tests/
+│       └── test_transaction_ledger.cairo
+├── ProjectManagement/  # Project management contract
+│   ├── Scarb.toml
+│   ├── src/
+│   │   ├── lib.cairo
+│   │   └── project_management.cairo
+│   └── tests/
+│       └── test_project_management.cairo
+└── OrganizationManagement/ # Organization management contract
     ├── Scarb.toml
     ├── src/
     │   ├── lib.cairo
-    │   └── reports.cairo
+    │   └── organization_management.cairo
     └── tests/
-        └── test_reports.cairo
+        └── test_organization_management.cairo
 ```
 
 ## Individual Contracts
@@ -142,6 +163,62 @@ contracts/
 - `get_financial_summary()` - Get overall financial status
 - `export_data()` - Export data in various formats
 
+### Transaction Ledger Contract (`TransactionLedger/`)
+
+**Purpose**: Record, track, and manage all financial transactions across the platform.
+
+**Key Features:**
+- Record all financial transactions with detailed metadata
+- Track transaction history and audit trails
+- Support multiple transaction types (income, expense, transfer)
+- Transaction categorization and tagging
+- Integration with budget and expense tracking
+
+**Core Functions:**
+- `record_transaction()` - Record a new financial transaction
+- `get_transaction_history()` - Retrieve transaction history
+- `categorize_transaction()` - Assign category to transaction
+- `get_transactions_by_type()` - Filter transactions by type
+- `update_transaction()` - Modify existing transaction records
+- `get_transaction_summary()` - Get transaction statistics
+
+### Project Management Contract (`ProjectManagement/`)
+
+**Purpose**: Manage projects, tasks, team collaboration, and project-related financial tracking.
+
+**Key Features:**
+- Create and manage projects with budgets
+- Task assignment and progress tracking
+- Team member management and permissions
+- Project timeline and milestone integration
+- Resource allocation and tracking
+
+**Core Functions:**
+- `create_project()` - Create a new project
+- `assign_task()` - Assign tasks to team members
+- `update_task_status()` - Update task completion status
+- `add_team_member()` - Add members to project team
+- `get_project_status()` - Get project progress and status
+- `allocate_resources()` - Allocate budget to project resources
+
+### Organization Management Contract (`OrganizationManagement/`)
+
+**Purpose**: Handle organizational structure, user roles, permissions, and access control.
+
+**Key Features:**
+- Create and manage organizations
+- Role-based access control (RBAC)
+- User permission management
+- Department and team structure
+- Organization-wide settings and policies
+
+**Core Functions:**
+- `create_organization()` - Create a new organization
+- `add_member()` - Add members to organization
+- `assign_role()` - Assign roles to organization members
+- `update_permissions()` - Modify user permissions
+- `get_organization_structure()` - Get org hierarchy
+- `set_organization_policy()` - Configure org-wide policies
 
 ## Prerequisites
 
@@ -185,7 +262,7 @@ snforge test
 
 ```bash
 # Build each contract individually
-for contract in Budget Milestones Expenses Goals Reports; do
+for contract in Budget Milestones Expenses Goals Reports TransactionLedger ProjectManagement OrganizationManagement; do
     echo "Building $contract..."
     cd $contract && scarb build && cd ..
 done
@@ -195,7 +272,7 @@ done
 
 ```bash
 # Test each contract individually
-for contract in Budget Milestones Expenses Goals Reports; do
+for contract in Budget Milestones Expenses Goals Reports TransactionLedger ProjectManagement OrganizationManagement; do
     echo "Testing $contract..."
     cd $contract && snforge test && cd ..
 done
@@ -276,7 +353,7 @@ starknet deploy --network mainnet
 
 ```bash
 # Deploy each contract individually
-for contract in Budget Milestones Expenses Goals Reports; do
+for contract in Budget Milestones Expenses Goals Reports TransactionLedger ProjectManagement OrganizationManagement; do
     echo "Deploying $contract..."
     cd $contract
     starknet deploy --network testnet
@@ -351,6 +428,51 @@ Each contract has its own API. Here are the key functions for each:
 - `ReportGenerated(report_id: u256, report_type: u8)`
 - `DataExported(export_id: u256, format: u8)`
 
+### Transaction Ledger Contract (`TransactionLedger/`)
+
+#### Core Functions
+- `record_transaction(amount: u256, transaction_type: u8, description: felt252) -> u256`
+- `get_transaction_history(limit: u256) -> Array<Transaction>`
+- `categorize_transaction(transaction_id: u256, category: felt252)`
+- `get_transactions_by_type(transaction_type: u8) -> Array<Transaction>`
+- `get_transaction_summary() -> TransactionSummary`
+
+#### Events
+- `TransactionRecorded(transaction_id: u256, amount: u256, transaction_type: u8)`
+- `TransactionCategorized(transaction_id: u256, category: felt252)`
+- `TransactionUpdated(transaction_id: u256, changes: felt252)`
+
+### Project Management Contract (`ProjectManagement/`)
+
+#### Core Functions
+- `create_project(name: felt252, budget: u256, deadline: u256) -> u256`
+- `assign_task(project_id: u256, task_name: felt252, assignee: ContractAddress) -> u256`
+- `update_task_status(task_id: u256, status: u8)`
+- `add_team_member(project_id: u256, member: ContractAddress, role: u8)`
+- `get_project_status(project_id: u256) -> ProjectStatus`
+- `allocate_resources(project_id: u256, resource_type: felt252, amount: u256)`
+
+#### Events
+- `ProjectCreated(project_id: u256, name: felt252, budget: u256)`
+- `TaskAssigned(task_id: u256, project_id: u256, assignee: ContractAddress)`
+- `TaskStatusUpdated(task_id: u256, status: u8)`
+- `TeamMemberAdded(project_id: u256, member: ContractAddress, role: u8)`
+
+### Organization Management Contract (`OrganizationManagement/`)
+
+#### Core Functions
+- `create_organization(name: felt252, owner: ContractAddress) -> u256`
+- `add_member(org_id: u256, member: ContractAddress)`
+- `assign_role(org_id: u256, member: ContractAddress, role: u8)`
+- `update_permissions(member: ContractAddress, permissions: Array<u8>)`
+- `get_organization_structure(org_id: u256) -> OrganizationStructure`
+- `set_organization_policy(org_id: u256, policy_type: u8, policy_data: felt252)`
+
+#### Events
+- `OrganizationCreated(org_id: u256, name: felt252, owner: ContractAddress)`
+- `MemberAdded(org_id: u256, member: ContractAddress)`
+- `RoleAssigned(org_id: u256, member: ContractAddress, role: u8)`
+- `PermissionsUpdated(member: ContractAddress, permissions: Array<u8>)`
 
 ## Contributing
 
