@@ -1,0 +1,13 @@
+{
+  "network": "testnet",
+  "account": "0x0521beee0243e3b42f9cceac335c1d51f85c888a7b03c89c100b085a7b21f5e7",
+  "contractName": "Example",
+  "classHash": "0x380314fe6a0205276cc1cd95e77e36f28bbd16078c75bccc24f01292c4ead77",
+  "contractAddress": "0x40d08965bc4294a57022aef3e9d6d762da8d67604f7e9c2a19b7f09400abbcb",
+  "tx": {
+    "declare": "0x52f3db345025852e19ccf68b0360f419741f46ed7a51f295eb720c0c97c0e44",
+    "deploy": "0x31bdcc6b1c1795a42d5952426925f559428e1a2e624622021dcc535e9870cb7"
+  },
+  "constructorArgs": [],
+  "timestamp": "2025-09-23T11:26:18.195Z"
+}

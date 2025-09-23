@@ -1,0 +1,22 @@
+{
+  "name": "budgetchain-deployment-scripts",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "deploy:example": "node deploy_example.js",
+    "deploy:budget": "node deploy_budget.js",
+    "deploy:milestones": "node deploy_milestones.js",
+    "deploy:expenses": "node deploy_expenses.js",
+    "deploy:goals": "node deploy_goals.js",
+    "deploy:reports": "node deploy_reports.js",
+    "deploy:transaction-ledger": "node deploy_transaction_ledger.js",
+    "deploy:project-management": "node deploy_project_management.js",
+    "deploy:organization-management": "node deploy_organization_management.js",
+    "deploy:all": "node deploy_all.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "starknet": "^7.6.4"
+  }
+}
