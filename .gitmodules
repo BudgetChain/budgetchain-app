@@ -1,0 +1,3 @@
+[submodule "contracts/milestone_manager"]
+	path = contracts/milestone_manager
+	url = ./contracts/milestone_manager
